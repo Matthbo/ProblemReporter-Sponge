@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+version = '1.8-1.0'
+group= 'matthbo.plugin.problemreporter'
+archivesBaseName = 'ProblemReporter'
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'sonatypeSnapshot'
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    maven {
+        name 'Sponge maven repo'
+        url 'http://repo.spongepowered.org/maven'
+    }
+}
+
+dependencies {
+    compile "org.spongepowered:spongeapi:1.1-SNAPSHOT"
+    compile "ninja.leaping.configurate:configurate-hocon:1.0-SNAPSHOT"
+}
