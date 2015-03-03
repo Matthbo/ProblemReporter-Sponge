@@ -1,5 +1,12 @@
-.gradle
-build/
+/.gradle
+/build
+/gradlew.bat
+
+# IDEA
+/.idea
+/*.iml
+/*.ipr
+/*.iws
 
 # Ignore Gradle GUI config
 gradle-app.setting
