@@ -1,6 +1,7 @@
 /.gradle
 /build
 /gradlew.bat
+/gradlew
 
 # IDEA
 /.idea
