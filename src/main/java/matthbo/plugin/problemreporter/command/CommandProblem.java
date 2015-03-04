@@ -15,8 +15,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandProblem implements CommandCallable {
@@ -72,28 +71,30 @@ public class CommandProblem implements CommandCallable {
 
     @Override
     public boolean testPermission(CommandSource source) {
-        return false;
+        return true;
     }
 
     @Override
     public Optional<String> getShortDescription() {
-        return Optional.of("make Desc");
+        return desc;
     }
 
     @Override
     public Optional<String> getHelp() {
-        return Optional.of("make Help");
-    }
+        return desc;
+    }//TODO check if changes need to be made!
 
     @Override
     public String getUsage() {
-        return "make Usage";
+        return Refs.Usage;
     }
 
     @Override
     public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
-        return null;
+        return Collections.emptyList();
     }
+
+    private final Optional<String> desc = Optional.of("Adds a message in the Problem List");
 
     public Message reported(Player player){
         return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Thank you " + player.getName()).color(TextColors.RESET).append(Messages.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build();

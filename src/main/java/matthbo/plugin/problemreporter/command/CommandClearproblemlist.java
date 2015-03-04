@@ -12,6 +12,7 @@ import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandClearproblemlist implements CommandCallable {
@@ -44,28 +45,30 @@ public class CommandClearproblemlist implements CommandCallable {
 
     @Override
     public boolean testPermission(CommandSource source) {
-        return false;
+        return true;
     }
 
     @Override
     public Optional<String> getShortDescription() {
-        return null;
+        return desc;
     }
 
     @Override
     public Optional<String> getHelp() {
-        return null;
-    }
+        return desc;
+    }//TODO check if changes need to be made!
 
     @Override
     public String getUsage() {
-        return null;
+        return Refs.Usage;
     }
 
     @Override
     public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
-        return null;
+        return Collections.emptyList();
     }
+
+    private final Optional<String> desc = Optional.of("Clears ProblemList.exe");
 
     private Message clearing(){
         return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Clearing ProblemList...").color(TextColors.RESET).build()).build();

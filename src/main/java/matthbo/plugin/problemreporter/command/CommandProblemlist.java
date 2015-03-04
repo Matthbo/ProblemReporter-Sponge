@@ -14,6 +14,7 @@ import org.spongepowered.api.util.command.CommandSource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandProblemlist implements CommandCallable {
@@ -55,28 +56,30 @@ public class CommandProblemlist implements CommandCallable {
 
     @Override
     public boolean testPermission(CommandSource source) {
-        return false;
+        return true;
     }
 
     @Override
     public Optional<String> getShortDescription() {
-        return null;
+        return desc;
     }
 
     @Override
     public Optional<String> getHelp() {
-        return null;
-    }
+        return desc;
+    }//TODO check if changes need to be made!
 
     @Override
     public String getUsage() {
-        return null;
+        return Refs.Usage;
     }
 
     @Override
     public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
-        return null;
+        return Collections.emptyList();
     }
+
+    private final Optional<String> desc = Optional.of("Shows the ProblemList.txt in chat");
 
     private Message loading(){
         return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Loading File...").color(TextColors.RESET).build()).build();
