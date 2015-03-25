@@ -4,9 +4,9 @@ import com.google.common.base.Optional;
 import matthbo.plugin.problemreporter.ProblemReporter;
 import matthbo.plugin.problemreporter.Refs;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.message.Message;
-import org.spongepowered.api.text.message.Messages;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
@@ -70,7 +70,7 @@ public class CommandClearproblemlist implements CommandCallable {
 
     private final Optional<String> desc = Optional.of("Clears ProblemList.exe");
 
-    private Message clearing(){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Clearing ProblemList...").color(TextColors.RESET).build()).build();
+    private Text clearing(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Clearing ProblemList...").color(TextColors.RESET).build()).build();
     }
 }

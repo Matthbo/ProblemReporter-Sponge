@@ -4,9 +4,9 @@ import com.google.common.base.Optional;
 import matthbo.plugin.problemreporter.ProblemReporter;
 import matthbo.plugin.problemreporter.Refs;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.message.Message;
-import org.spongepowered.api.text.message.Messages;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
@@ -32,7 +32,7 @@ public class CommandProblemlist implements CommandCallable {
                 BufferedReader br = new BufferedReader(new FileReader(dataFolder + "/ProblemList.txt"));
                 String str;
                 while((str = br.readLine()) != null){
-                    sender.sendMessage(str);
+                    sender.sendMessage(Texts.of(str));
                 }
                 br.close();
             }
@@ -81,11 +81,11 @@ public class CommandProblemlist implements CommandCallable {
 
     private final Optional<String> desc = Optional.of("Shows the ProblemList.txt in chat");
 
-    private Message loading(){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Loading File...").color(TextColors.RESET).build()).build();
+    private Text loading(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Loading File...").color(TextColors.RESET).build()).build();
     }
 
-    private Message filedoesntExist(){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Nothing!").color(TextColors.RESET).build()).build();
+    private Text filedoesntExist(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Nothing!").color(TextColors.RESET).build()).build();
     }
 }

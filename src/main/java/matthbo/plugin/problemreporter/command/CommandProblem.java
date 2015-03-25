@@ -4,9 +4,9 @@ import com.google.common.base.Optional;
 import matthbo.plugin.problemreporter.ProblemReporter;
 import matthbo.plugin.problemreporter.Refs;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.message.Message;
-import org.spongepowered.api.text.message.Messages;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandSource;
@@ -64,7 +64,7 @@ public class CommandProblem implements CommandCallable {
             }
         }else{
             sender.sendMessage(wrngSender());
-            sender.sendMessage("matthbo was here!");
+            sender.sendMessage(Texts.of("matthbo was here!"));
         }
         return true;
     }
@@ -96,19 +96,19 @@ public class CommandProblem implements CommandCallable {
 
     private final Optional<String> desc = Optional.of("Adds a message in the Problem List");
 
-    public Message reported(Player player){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Thank you " + player.getName()).color(TextColors.RESET).append(Messages.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build();
+    public Text reported(Player player){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Thank you " + player.getName()).color(TextColors.RESET).append(Texts.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build();
     }
 
-    public Message usage(){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Usage /problem <args>").color(TextColors.RED).build()).build();
+    public Text usage(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Usage /problem <args>").color(TextColors.RED).build()).build();
     }
 
-    public Message wrngSender(){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("What do you think?").color(TextColors.RED).build()).build();
+    public Text wrngSender(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("What do you think?").color(TextColors.RED).build()).build();
     }
 
-    public Message notify(Player player, String args){
-        return Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder(player.getName()).color(TextColors.RESET).append(Messages.builder(": ").append(Messages.builder(args).build()).build()).build()).build();
+    public Text notify(Player player, String args){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder(player.getName()).color(TextColors.RESET).append(Texts.builder(": ").append(Texts.builder(args).build()).build()).build()).build();
     }
 }

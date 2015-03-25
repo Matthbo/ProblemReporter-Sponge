@@ -1,8 +1,8 @@
 package matthbo.plugin.problemreporter;
 
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.message.Message;
-import org.spongepowered.api.text.message.Messages;
 
 public class Refs {
 
@@ -13,8 +13,8 @@ public class Refs {
 
     public static final String Usage = "/<command> <message>";
 
-    public static Message wrngSender(){
-        return Messages.builder(pluginMSG).color(TextColors.AQUA).append(Messages.builder("Player Command Only!").color(TextColors.RED).build()).build();
+    public static Text wrngSender(){
+        return Texts.builder(pluginMSG).color(TextColors.AQUA).append(Texts.builder("Player Command Only!").color(TextColors.RED).build()).build();
     }
 
 }
