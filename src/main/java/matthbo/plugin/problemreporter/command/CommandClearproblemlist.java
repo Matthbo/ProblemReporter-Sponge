@@ -9,10 +9,10 @@ import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
+import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.List;
 
 public class CommandClearproblemlist implements CommandCallable {
@@ -28,8 +28,12 @@ public class CommandClearproblemlist implements CommandCallable {
         }catch(Exception e){e.printStackTrace();}
     }
 
+    private Text clearing(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Clearing ProblemList...").color(TextColors.RESET).build()).build();
+    }
+
     @Override
-    public boolean call(CommandSource sender, String args, List<String> parents) throws CommandException {
+    public Optional<CommandResult> process(CommandSource sender, String args) throws CommandException {
         if(sender instanceof Player){
             Player player = (Player)sender;
             if(player.hasPermission("problemreporter.clearhelplist")){
@@ -40,37 +44,34 @@ public class CommandClearproblemlist implements CommandCallable {
         }else{
             sender.sendMessage(Refs.wrngSender());
         }
-        return true;
+        return Optional.of(CommandResult.success());
+    }
+
+    private final Object desc = "Clears ProblemList.exe";
+    private final Object usage = "/<command>";
+
+    @Override
+    public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
+        return null;
     }
 
     @Override
     public boolean testPermission(CommandSource source) {
-        return true;
+        return false;
     }
 
     @Override
-    public Optional<String> getShortDescription() {
-        return desc;
+    public Optional<Text> getShortDescription(CommandSource source) {
+        return Optional.of(Texts.of(desc));
     }
 
     @Override
-    public Optional<String> getHelp() {
-        return desc;
-    }//TODO check if changes need to be made!
-
-    @Override
-    public String getUsage() {
-        return Refs.Usage;
+    public Optional<Text> getHelp(CommandSource source) {
+        return Optional.of(Texts.of(desc));
     }
 
     @Override
-    public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
-        return Collections.emptyList();
-    }
-
-    private final Optional<String> desc = Optional.of("Clears ProblemList.exe");
-
-    private Text clearing(){
-        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Clearing ProblemList...").color(TextColors.RESET).build()).build();
+    public Text getUsage(CommandSource source) {
+        return Texts.of(usage);
     }
 }

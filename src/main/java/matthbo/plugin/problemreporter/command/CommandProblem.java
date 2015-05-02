@@ -9,13 +9,14 @@ import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
+import org.spongepowered.api.util.command.CommandResult;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommandProblem implements CommandCallable {
@@ -37,8 +38,24 @@ public class CommandProblem implements CommandCallable {
         }catch(IOException e){e.printStackTrace();}
     }
 
+    public Text reported(Player player){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Thank you " + player.getName()).color(TextColors.RESET).append(Texts.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build();
+    }
+
+    public Text usage(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Usage /problem <args>").color(TextColors.RED).build()).build();
+    }
+
+    public Text wrngSender(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("What do you think?").color(TextColors.RED).build()).build();
+    }
+
+    public Text notify(Player player, String args){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder(player.getName()).color(TextColors.RESET).append(Texts.builder(": ").append(Texts.builder(args).build()).build()).build()).build();
+    }
+
     @Override
-    public boolean call(CommandSource sender, String args, List<String> parents) throws CommandException {
+    public Optional<CommandResult> process(CommandSource sender, String args) throws CommandException {
         if(sender instanceof Player){
             Player player = (Player)sender;
             if(args.length() > 1){
@@ -54,7 +71,7 @@ public class CommandProblem implements CommandCallable {
                 //player.sendMessage(Refs.pluginMSG + "Thank you " + player.getName() + TextColors.DARK_AQUA.getColor() + ", Your question wil be answered as soon as possible!");
                 //player.sendMessage(Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Thank you " + player.getName()).append(Messages.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build());
                 player.sendMessage(reported(player));
-                Object[] ops = PR.getGame().getServer().get().getOnlinePlayers().toArray();
+                Object[] ops = PR.getGame().getServer().getOnlinePlayers().toArray();
                 for(int j = 0; j < ops.length; j++){
                     Player target = (Player)ops[j];
                     if(target.hasPermission("problemreporter.notify")) target.sendMessage(notify(player, args));
@@ -66,49 +83,34 @@ public class CommandProblem implements CommandCallable {
             sender.sendMessage(wrngSender());
             sender.sendMessage(Texts.of("matthbo was here!"));
         }
-        return true;
+        return Optional.of(CommandResult.success());
+    }
+
+    private final Object desc = "Adds a message in the Problem List";
+    private final Object usage = "/<command> <your problem>...";
+
+    @Override
+    public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
+        return null;
     }
 
     @Override
     public boolean testPermission(CommandSource source) {
-        return true;
+        return false;
     }
 
     @Override
-    public Optional<String> getShortDescription() {
-        return desc;
+    public Optional<Text> getShortDescription(CommandSource source) {
+        return Optional.of(Texts.of(desc));
     }
 
     @Override
-    public Optional<String> getHelp() {
-        return desc;
-    }//TODO check if changes need to be made!
-
-    @Override
-    public String getUsage() {
-        return Refs.Usage;
+    public Optional<Text> getHelp(CommandSource source) {
+        return Optional.of(Texts.of(desc));
     }
 
     @Override
-    public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
-        return Collections.emptyList();
-    }
-
-    private final Optional<String> desc = Optional.of("Adds a message in the Problem List");
-
-    public Text reported(Player player){
-        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Thank you " + player.getName()).color(TextColors.RESET).append(Texts.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build();
-    }
-
-    public Text usage(){
-        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Usage /problem <args>").color(TextColors.RED).build()).build();
-    }
-
-    public Text wrngSender(){
-        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("What do you think?").color(TextColors.RED).build()).build();
-    }
-
-    public Text notify(Player player, String args){
-        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder(player.getName()).color(TextColors.RESET).append(Texts.builder(": ").append(Texts.builder(args).build()).build()).build()).build();
+    public Text getUsage(CommandSource source) {
+        return Texts.of(usage);
     }
 }
