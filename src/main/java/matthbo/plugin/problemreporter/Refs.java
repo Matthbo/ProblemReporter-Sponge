@@ -7,7 +7,7 @@ import org.spongepowered.api.text.format.TextColors;
 public class Refs {
 
     public static final String NAME = "ProblemReporter";
-    public static final String VERSION = "1.0-snapshot-1";
+    public static final String VERSION = "1.0-snapshot-2";
 
     public static final String pluginMSG = "[ProblemReporter] ";
 
