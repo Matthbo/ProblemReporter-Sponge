@@ -30,7 +30,7 @@ public class ProblemReporter {
         instance = this;
 
         CommandService cmdService = game.getCommandDispatcher();
-        cmdService.register(instance, new CommandProblem(), "problem");
+        cmdService.register(instance, new CommandProblem(), "problem", "report");
         cmdService.register(instance, new CommandProblemlist(), "problemlist");
         cmdService.register(instance, new CommandClearproblemlist(), "clearproblemlist");
         //cmdService.register(instance, new CommandTest(), "test");
