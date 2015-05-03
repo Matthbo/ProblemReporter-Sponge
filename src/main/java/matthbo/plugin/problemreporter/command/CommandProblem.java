@@ -55,26 +55,27 @@ public class CommandProblem implements CommandCallable {
     }
 
     @Override
-    public Optional<CommandResult> process(CommandSource sender, String args) throws CommandException {
+    public Optional<CommandResult> process(CommandSource sender, String arguments) throws CommandException {
+        String[] args = arguments.split(" ");
         if(sender instanceof Player){
             Player player = (Player)sender;
-            if(args.length() > 1){
+            if(args.length > 1){
 
-                /*StringBuilder str = new StringBuilder();
-                for (int i = 0; i < args.length(); i++) {
+                StringBuilder str = new StringBuilder();
+                for (int i = 0; i < args.length; i++) {
                     str.append(args[i] + " ");
                 }
                 String bc = str.toString();
-                //player.sendMessage(player.getName()+ ": " + bc);*/
+                //player.sendMessage(player.getName()+ ": " + bc);
 
-                logToFile(player.getName()+ ": " + args);
+                logToFile(player.getName()+ ": " + bc);
                 //player.sendMessage(Refs.pluginMSG + "Thank you " + player.getName() + TextColors.DARK_AQUA.getColor() + ", Your question wil be answered as soon as possible!");
                 //player.sendMessage(Messages.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Messages.builder("Thank you " + player.getName()).append(Messages.builder(", Your question wil be answered as soon as possible!").color(TextColors.DARK_AQUA).build()).build()).build());
                 player.sendMessage(reported(player));
                 Object[] ops = PR.getGame().getServer().getOnlinePlayers().toArray();
                 for(int j = 0; j < ops.length; j++){
                     Player target = (Player)ops[j];
-                    if(target.hasPermission("problemreporter.notify")) target.sendMessage(notify(player, args));
+                    if(target.hasPermission("problemreporter.notify")) target.sendMessage(notify(player, bc));
                 }
             }else{
                 player.sendMessage(usage());
