@@ -14,9 +14,28 @@ repositories {
         name 'Sponge maven repo'
         url 'http://repo.spongepowered.org/maven'
     }
+    maven {
+        name = 'boformer maven repo'
+        url = 'http://homepage.rub.de/Felix.Schmidt-c2n/maven/'
+    }
+}
+
+configurations {
+    provided
+    compile.extendsFrom provided
 }
 
 dependencies {
-    compile "org.spongepowered:spongeapi:1.1-SNAPSHOT"
-    compile "ninja.leaping.configurate:configurate-hocon:1.0-SNAPSHOT"
+    provided 'org.spongepowered:spongeapi:1.1-SNAPSHOT'
+    provided 'ninja.leaping.configurate:configurate-hocon:1.0-SNAPSHOT'
+    compile 'com.github.boformer:doublecheck:1.0.1'
+}
+
+jar {
+    dependsOn configurations.runtime
+    from {
+        (configurations.runtime - configurations.provided).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }

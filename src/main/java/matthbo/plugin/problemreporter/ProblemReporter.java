@@ -1,5 +1,7 @@
 package matthbo.plugin.problemreporter;
 
+import com.github.boformer.doublecheck.ConfirmationService;
+import com.github.boformer.doublecheck.DoubleCheck;
 import com.google.inject.Inject;
 import matthbo.plugin.problemreporter.command.*;
 import org.slf4j.Logger;
@@ -23,11 +25,14 @@ public class ProblemReporter {
     @Inject
     private Game game;
 
+    private ConfirmationService cService;
     private File dataFolder = new File("mods/",Refs.NAME);
 
     @Subscribe
     public void onEnable(ServerStartingEvent event){
         instance = this;
+
+        cService = DoubleCheck.initializeService(game, instance);
 
         CommandService cmdService = game.getCommandDispatcher();
         cmdService.register(instance, new CommandProblem(), "problem", "report");
@@ -49,6 +54,10 @@ public class ProblemReporter {
 
     public Game getGame(){
         return game;
+    }
+
+    public ConfirmationService  getCService(){
+        return cService;
     }
 
     public File getDataFolder(){

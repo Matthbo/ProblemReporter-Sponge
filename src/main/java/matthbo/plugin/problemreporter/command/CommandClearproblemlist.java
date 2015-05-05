@@ -1,5 +1,6 @@
 package matthbo.plugin.problemreporter.command;
 
+import com.github.boformer.doublecheck.Request;
 import com.google.common.base.Optional;
 import matthbo.plugin.problemreporter.ProblemReporter;
 import matthbo.plugin.problemreporter.Refs;
@@ -31,15 +32,16 @@ public class CommandClearproblemlist implements CommandCallable {
     private Text clearing(){
         return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Clearing ProblemList...").color(TextColors.RESET).build()).build();
     }
+    private Text denied(){
+        return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Clearing cancelled!").color(TextColors.RESET).build()).build();
+    }
 
     @Override
     public Optional<CommandResult> process(CommandSource sender, String args) throws CommandException {
         if(sender instanceof Player){
             Player player = (Player)sender;
             if(player.hasPermission("problemreporter.clearhelplist")){
-
-                player.sendMessage(clearing());
-                clearList();
+                PR.getCService().send(player, new ClearRequest());
             }else{}
         }else{
             sender.sendMessage(Refs.wrngSender());
@@ -73,5 +75,24 @@ public class CommandClearproblemlist implements CommandCallable {
     @Override
     public Text getUsage(CommandSource source) {
         return Texts.of(usage);
+    }
+
+    private class ClearRequest implements Request{
+
+        @Override
+        public Text getMessage() {
+            return Texts.builder(Refs.pluginMSG).color(TextColors.AQUA).append(Texts.builder("Are you sure you want to clear the problemlist?").color(TextColors.RESET).build()).build();
+        }
+
+        @Override
+        public void confirm(CommandSource source) {
+            source.sendMessage(clearing());
+            clearList();
+        }
+
+        @Override
+        public void deny(CommandSource source) {
+            source.sendMessage(denied());
+        }
     }
 }
